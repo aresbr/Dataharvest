@@ -1,0 +1,120 @@
+force,hospital,outcome,crime_count
+Cumbria Constabulary,Carleton Clinic,Adult Caution With Alternate Offence,1
+Cumbria Constabulary,Furness General Hospital,Adult Caution With Alternate Offence,1
+Cumbria Constabulary,Cumberland Infirmary,Cannabis Warning,1
+Cumbria Constabulary,Furness General Hospital,Cannabis Warning,1
+Cumbria Constabulary,Carleton Clinic,Caution - Adults,2
+Cumbria Constabulary,Cumberland Infirmary,Caution - Adults,5
+Cumbria Constabulary,Furness General Hospital,Caution - Adults,9
+Cumbria Constabulary,Carleton Clinic,Charge/Summons,94
+Cumbria Constabulary,Cumberland Infirmary,Charge/Summons,150
+Cumbria Constabulary,Furness General Hospital,Charge/Summons,101
+Cumbria Constabulary,Carleton Clinic,Charge/Summonsed With Alternate Offence,7
+Cumbria Constabulary,Cumberland Infirmary,Charge/Summonsed With Alternate Offence,12
+Cumbria Constabulary,Furness General Hospital,Charge/Summonsed With Alternate Offence,7
+Cumbria Constabulary,Carleton Clinic,Community Resolution,23
+Cumbria Constabulary,Cumberland Infirmary,Community Resolution,10
+Cumbria Constabulary,Furness General Hospital,Community Resolution,15
+Cumbria Constabulary,Cumberland Infirmary,"Diversionary, Educational Or Intervention Activity Undertaken",1
+Cumbria Constabulary,Furness General Hospital,"Diversionary, Educational Or Intervention Activity Undertaken",5
+Cumbria Constabulary,Carleton Clinic,Evidential Difficulties Victim Based - Named Suspect Not Identified,7
+Cumbria Constabulary,Cumberland Infirmary,Evidential Difficulties Victim Based - Named Suspect Not Identified,10
+Cumbria Constabulary,Furness General Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,4
+Cumbria Constabulary,Carleton Clinic,Formal Action Against The Offender Is Not In The Public Interest (Police),4
+Cumbria Constabulary,Cumberland Infirmary,Formal Action Against The Offender Is Not In The Public Interest (Police),2
+Cumbria Constabulary,Brampton War Memorial Hospital,Investigation Complete: No Suspect Identified,2
+Cumbria Constabulary,Carleton Clinic,Investigation Complete: No Suspect Identified,59
+Cumbria Constabulary,Cockermouth Community Hospital,Investigation Complete: No Suspect Identified,2
+Cumbria Constabulary,Cumberland Infirmary,Investigation Complete: No Suspect Identified,74
+Cumbria Constabulary,Furness General Hospital,Investigation Complete: No Suspect Identified,50
+Cumbria Constabulary,Keswick (Mary Hewetson) Community Hospital,Investigation Complete: No Suspect Identified,1
+Cumbria Constabulary,Brampton War Memorial Hospital,Named Suspect - Further Investigation Not In Public Interest,1
+Cumbria Constabulary,Carleton Clinic,Named Suspect - Further Investigation Not In Public Interest,99
+Cumbria Constabulary,Cockermouth Community Hospital,Named Suspect - Further Investigation Not In Public Interest,1
+Cumbria Constabulary,Cumberland Infirmary,Named Suspect - Further Investigation Not In Public Interest,65
+Cumbria Constabulary,Furness General Hospital,Named Suspect - Further Investigation Not In Public Interest,74
+Cumbria Constabulary,Keswick (Mary Hewetson) Community Hospital,Named Suspect - Further Investigation Not In Public Interest,1
+Cumbria Constabulary,Brampton War Memorial Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,4
+Cumbria Constabulary,Carleton Clinic,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,413
+Cumbria Constabulary,Cockermouth Community Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,3
+Cumbria Constabulary,Cumberland Infirmary,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,120
+Cumbria Constabulary,Furness General Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,153
+Cumbria Constabulary,Keswick (Mary Hewetson) Community Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,3
+Cumbria Constabulary,Brampton War Memorial Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,2
+Cumbria Constabulary,Carleton Clinic,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,99
+Cumbria Constabulary,Cockermouth Community Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,2
+Cumbria Constabulary,Cumberland Infirmary,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,47
+Cumbria Constabulary,Furness General Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,57
+Cumbria Constabulary,James Cook University Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,1
+Cumbria Constabulary,Keswick (Mary Hewetson) Community Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,2
+Cumbria Constabulary,Carleton Clinic,Other Agency Delegations,1
+Cumbria Constabulary,Cumberland Infirmary,Other Agency Delegations,5
+Cumbria Constabulary,Furness General Hospital,Other Agency Delegations,1
+Cumbria Constabulary,Carleton Clinic,Penalty Notice For Disorder,1
+Cumbria Constabulary,Furness General Hospital,Penalty Notice For Disorder,1
+Cumbria Constabulary,Carleton Clinic,Prosecution Not In The Public Interest (CPS),1
+Cumbria Constabulary,Carleton Clinic,Prosecution Prevented - Named Suspect Too Ill To Prosecute,77
+Cumbria Constabulary,Cockermouth Community Hospital,Prosecution Prevented - Named Suspect Too Ill To Prosecute,2
+Cumbria Constabulary,Cumberland Infirmary,Prosecution Prevented - Named Suspect Too Ill To Prosecute,24
+Cumbria Constabulary,Furness General Hospital,Prosecution Prevented - Named Suspect Too Ill To Prosecute,73
+Cumbria Constabulary,Carleton Clinic,Prosecution Prevented - Victim Or Key Witness Dead Or Too Ill To Give Evidence,9
+Cumbria Constabulary,Cumberland Infirmary,Prosecution Prevented - Victim Or Key Witness Dead Or Too Ill To Give Evidence,1
+Cumbria Constabulary,Furness General Hospital,Prosecution Prevented - Victim Or Key Witness Dead Or Too Ill To Give Evidence,7
+Cumbria Constabulary,Carleton Clinic,Prosecution Time Limit Expired,11
+Cumbria Constabulary,Cumberland Infirmary,Prosecution Time Limit Expired,4
+Cumbria Constabulary,Furness General Hospital,Prosecution Time Limit Expired,2
+Cumbria Constabulary,West Cumberland Hospital,Cannabis Warning,1
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Caution - Adults,1
+Cumbria Constabulary,Penrith Hospital,Caution - Adults,1
+Cumbria Constabulary,West Cumberland Hospital,Caution - Adults,3
+Cumbria Constabulary,Westmorland General Hospital,Caution - Adults,1
+Cumbria Constabulary,West Cumberland Hospital,Caution - Youths,3
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Charge/Summons,1
+Cumbria Constabulary,Penrith Hospital,Charge/Summons,2
+Cumbria Constabulary,Royal Lancaster Infirmary,Charge/Summons,1
+Cumbria Constabulary,Ryhope Hospital,Charge/Summons,1
+Cumbria Constabulary,West Cumberland Hospital,Charge/Summons,61
+Cumbria Constabulary,Westmorland General Hospital,Charge/Summons,5
+Cumbria Constabulary,Workington Community Hospital,Charge/Summons,1
+Cumbria Constabulary,West Cumberland Hospital,Charge/Summonsed With Alternate Offence,3
+Cumbria Constabulary,Westmorland General Hospital,Charge/Summonsed With Alternate Offence,1
+Cumbria Constabulary,Penrith Hospital,Community Resolution,1
+Cumbria Constabulary,Royal Lancaster Infirmary,Community Resolution,1
+Cumbria Constabulary,West Cumberland Hospital,Community Resolution,3
+Cumbria Constabulary,Westmorland General Hospital,Community Resolution,3
+Cumbria Constabulary,Royal Lancaster Infirmary,"Diversionary, Educational Or Intervention Activity Undertaken",2
+Cumbria Constabulary,West Cumberland Hospital,"Diversionary, Educational Or Intervention Activity Undertaken",1
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,2
+Cumbria Constabulary,Penrith Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,1
+Cumbria Constabulary,West Cumberland Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,2
+Cumbria Constabulary,Westmorland General Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,2
+Cumbria Constabulary,Workington Community Hospital,Evidential Difficulties Victim Based - Named Suspect Not Identified,1
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Investigation Complete: No Suspect Identified,1
+Cumbria Constabulary,Millom Hospital,Investigation Complete: No Suspect Identified,2
+Cumbria Constabulary,Penrith Hospital,Investigation Complete: No Suspect Identified,4
+Cumbria Constabulary,West Cumberland Hospital,Investigation Complete: No Suspect Identified,31
+Cumbria Constabulary,Westmorland General Hospital,Investigation Complete: No Suspect Identified,9
+Cumbria Constabulary,Workington Community Hospital,Investigation Complete: No Suspect Identified,4
+Cumbria Constabulary,Penrith Hospital,Named Suspect - Further Investigation Not In Public Interest,3
+Cumbria Constabulary,Royal Lancaster Infirmary,Named Suspect - Further Investigation Not In Public Interest,1
+Cumbria Constabulary,West Cumberland Hospital,Named Suspect - Further Investigation Not In Public Interest,48
+Cumbria Constabulary,Westmorland General Hospital,Named Suspect - Further Investigation Not In Public Interest,14
+Cumbria Constabulary,Workington Community Hospital,Named Suspect - Further Investigation Not In Public Interest,1
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,1
+Cumbria Constabulary,Penrith Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,3
+Cumbria Constabulary,West Cumberland Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,124
+Cumbria Constabulary,Westmorland General Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,15
+Cumbria Constabulary,Workington Community Hospital,Named Suspect Identified: Evidential Difficulties - Victim Does Not Support Police Action,15
+Cumbria Constabulary,Maryport Victoria Cottage Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,1
+Cumbria Constabulary,Penrith Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,3
+Cumbria Constabulary,West Cumberland Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,40
+Cumbria Constabulary,Westmorland General Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,5
+Cumbria Constabulary,Workington Community Hospital,Named Suspect Identified: Victim Supports Police Action But Evidential Difficulties,1
+Cumbria Constabulary,Royal Lancaster Infirmary,Other Agency Delegations,1
+Cumbria Constabulary,Workington Community Hospital,Other Agency Delegations,1
+Cumbria Constabulary,West Cumberland Hospital,Prosecution Prevented - Named Suspect Too Ill To Prosecute,19
+Cumbria Constabulary,Westmorland General Hospital,Prosecution Prevented - Named Suspect Too Ill To Prosecute,13
+Cumbria Constabulary,Workington Community Hospital,Prosecution Prevented - Named Suspect Too Ill To Prosecute,2
+Cumbria Constabulary,Royal Lancaster Infirmary,Prosecution Prevented - Victim Or Key Witness Dead Or Too Ill To Give Evidence,4
+Cumbria Constabulary,West Cumberland Hospital,Prosecution Time Limit Expired,1
+Cumbria Constabulary,Westmorland General Hospital,Prosecution Time Limit Expired,1

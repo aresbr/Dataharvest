@@ -1,0 +1,105 @@
+force,financial_year,offence_category,crime_count
+Cumbria Constabulary,2019/20,Absconding From Lawful Custody,1
+Cumbria Constabulary,2021/22,Absconding From Lawful Custody,3
+Cumbria Constabulary,2022/23,Absconding From Lawful Custody,1
+Cumbria Constabulary,2019/20,Arson,2
+Cumbria Constabulary,2020/21,Arson,2
+Cumbria Constabulary,2021/22,Arson,2
+Cumbria Constabulary,2022/23,Arson,4
+Cumbria Constabulary,2019/20,Bicycle Theft,2
+Cumbria Constabulary,2021/22,Bicycle Theft,1
+Cumbria Constabulary,2023/24,Bicycle Theft,1
+Cumbria Constabulary,2019/20,Burglary Business and Community,5
+Cumbria Constabulary,2020/21,Burglary Business and Community,3
+Cumbria Constabulary,2021/22,Burglary Business and Community,3
+Cumbria Constabulary,2022/23,Burglary Business and Community,2
+Cumbria Constabulary,2023/24,Burglary Business and Community,1
+Cumbria Constabulary,2019/20,Burglary Residential,1
+Cumbria Constabulary,2021/22,Burglary Residential,1
+Cumbria Constabulary,2019/20,Criminal Damage,69
+Cumbria Constabulary,2020/21,Criminal Damage,48
+Cumbria Constabulary,2021/22,Criminal Damage,54
+Cumbria Constabulary,2022/23,Criminal Damage,50
+Cumbria Constabulary,2023/24,Criminal Damage,33
+Cumbria Constabulary,2020/21,Dangerous Driving,1
+Cumbria Constabulary,2022/23,"Disclosure, Obstruction, False Or Misleading Statements Etc",1
+Cumbria Constabulary,2019/20,Interfering With A Motor Vehicle,1
+Cumbria Constabulary,2019/20,NFIB52B Hacking-Personal,1
+Cumbria Constabulary,2022/23,NFIB52B Hacking-Personal,2
+Cumbria Constabulary,2019/20,"NFIB5A Cheque, Plastic Card And Online Bank Accounts (Not PSP)",2
+Cumbria Constabulary,2021/22,"NFIB5A Cheque, Plastic Card And Online Bank Accounts (Not PSP)",1
+Cumbria Constabulary,2019/20,NFIB90 Other Fraud Not Covered Elsewhere,2
+Cumbria Constabulary,2020/21,NFIB90 Other Fraud Not Covered Elsewhere,9
+Cumbria Constabulary,2021/22,NFIB90 Other Fraud Not Covered Elsewhere,1
+Cumbria Constabulary,2022/23,NFIB90 Other Fraud Not Covered Elsewhere,1
+Cumbria Constabulary,2022/23,Other Forgery,1
+Cumbria Constabulary,2022/23,Other Notifiable Offences,2
+Cumbria Constabulary,2019/20,Other Offences Against The State Or Public Order,5
+Cumbria Constabulary,2020/21,Other Offences Against The State Or Public Order,3
+Cumbria Constabulary,2021/22,Other Offences Against The State Or Public Order,2
+Cumbria Constabulary,2022/23,Other Offences Against The State Or Public Order,4
+Cumbria Constabulary,2023/24,Other Offences Against The State Or Public Order,3
+Cumbria Constabulary,2019/20,Other Sexual Offences,11
+Cumbria Constabulary,2020/21,Other Sexual Offences,10
+Cumbria Constabulary,2021/22,Other Sexual Offences,10
+Cumbria Constabulary,2022/23,Other Sexual Offences,19
+Cumbria Constabulary,2023/24,Other Sexual Offences,13
+Cumbria Constabulary,2019/20,Other Theft,52
+Cumbria Constabulary,2020/21,Other Theft,25
+Cumbria Constabulary,2021/22,Other Theft,27
+Cumbria Constabulary,2022/23,Other Theft,20
+Cumbria Constabulary,2023/24,Other Theft,11
+Cumbria Constabulary,2022/23,Perverting The Course Of Justice,1
+Cumbria Constabulary,2019/20,Possession Of Article With Blade Or Point,3
+Cumbria Constabulary,2020/21,Possession Of Article With Blade Or Point,6
+Cumbria Constabulary,2021/22,Possession Of Article With Blade Or Point,4
+Cumbria Constabulary,2023/24,Possession Of Article With Blade Or Point,2
+Cumbria Constabulary,2019/20,Possession Of Drugs,11
+Cumbria Constabulary,2020/21,Possession Of Drugs,6
+Cumbria Constabulary,2021/22,Possession Of Drugs,6
+Cumbria Constabulary,2022/23,Possession Of Drugs,8
+Cumbria Constabulary,2023/24,Possession Of Drugs,12
+Cumbria Constabulary,2019/20,Possession Of Other Weapons,1
+Cumbria Constabulary,2020/21,Possession Of Other Weapons,2
+Cumbria Constabulary,2021/22,Possession Of Other Weapons,2
+Cumbria Constabulary,2023/24,Possession Of Other Weapons,2
+Cumbria Constabulary,2019/20,"Public Fear, Alarm Or Distress",64
+Cumbria Constabulary,2020/21,"Public Fear, Alarm Or Distress",34
+Cumbria Constabulary,2021/22,"Public Fear, Alarm Or Distress",54
+Cumbria Constabulary,2022/23,"Public Fear, Alarm Or Distress",55
+Cumbria Constabulary,2023/24,"Public Fear, Alarm Or Distress",25
+Cumbria Constabulary,2019/20,"Racially Or Religiously Aggravated Public Fear, Alarm Or Distress",8
+Cumbria Constabulary,2020/21,"Racially Or Religiously Aggravated Public Fear, Alarm Or Distress",15
+Cumbria Constabulary,2021/22,"Racially Or Religiously Aggravated Public Fear, Alarm Or Distress",20
+Cumbria Constabulary,2022/23,"Racially Or Religiously Aggravated Public Fear, Alarm Or Distress",18
+Cumbria Constabulary,2023/24,"Racially Or Religiously Aggravated Public Fear, Alarm Or Distress",13
+Cumbria Constabulary,2019/20,Rape,8
+Cumbria Constabulary,2020/21,Rape,4
+Cumbria Constabulary,2021/22,Rape,3
+Cumbria Constabulary,2022/23,Rape,3
+Cumbria Constabulary,2023/24,Rape,1
+Cumbria Constabulary,2020/21,Shoplifting,1
+Cumbria Constabulary,2019/20,Stalking And Harassment,19
+Cumbria Constabulary,2020/21,Stalking And Harassment,16
+Cumbria Constabulary,2021/22,Stalking And Harassment,38
+Cumbria Constabulary,2022/23,Stalking And Harassment,25
+Cumbria Constabulary,2023/24,Stalking And Harassment,7
+Cumbria Constabulary,2019/20,Theft From The Person,2
+Cumbria Constabulary,2021/22,Theft From The Person,1
+Cumbria Constabulary,2019/20,Theft From Vehicle,6
+Cumbria Constabulary,2020/21,Theft From Vehicle,2
+Cumbria Constabulary,2020/21,Threat Or Possession With Intent To Commit Criminal Damage,1
+Cumbria Constabulary,2021/22,Threat Or Possession With Intent To Commit Criminal Damage,1
+Cumbria Constabulary,2022/23,Threat Or Possession With Intent To Commit Criminal Damage,3
+Cumbria Constabulary,2019/20,Trafficking In Controlled Drugs,1
+Cumbria Constabulary,2022/23,Trafficking In Controlled Drugs,1
+Cumbria Constabulary,2019/20,Violence With Injury,99
+Cumbria Constabulary,2020/21,Violence With Injury,60
+Cumbria Constabulary,2021/22,Violence With Injury,89
+Cumbria Constabulary,2022/23,Violence With Injury,74
+Cumbria Constabulary,2023/24,Violence With Injury,26
+Cumbria Constabulary,2019/20,Violence Without Injury,259
+Cumbria Constabulary,2020/21,Violence Without Injury,257
+Cumbria Constabulary,2021/22,Violence Without Injury,246
+Cumbria Constabulary,2022/23,Violence Without Injury,218
+Cumbria Constabulary,2023/24,Violence Without Injury,128
