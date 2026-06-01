@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catàleg de Fonts de Dades — Periodisme de Dades</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;font-size:14px;background:#f0f4f8;color:#1e293b;min-height:100vh}
+a{color:#2563eb;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Header ── */
+header{background:#1e3a5f;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+header h1{font-size:18px;font-weight:700;letter-spacing:.3px}
+header span{font-size:12px;opacity:.7;margin-left:auto}
+
+/* ── Tabs ── */
+nav.tabs{display:flex;gap:2px;background:#dbe4f0;padding:8px 16px 0}
+nav.tabs button{padding:8px 18px;border:none;border-radius:6px 6px 0 0;cursor:pointer;font-size:13px;font-weight:600;background:#c8d6e8;color:#334155;transition:background .15s}
+nav.tabs button.active{background:#fff;color:#1e3a5f}
+nav.tabs button:hover:not(.active){background:#d6e3f0}
+
+/* ── Tab panels ── */
+.panel{display:none;padding:16px;background:#fff;border-radius:0 6px 6px 6px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.panel.active{display:block}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
+.toolbar input[type=text]{flex:1;min-width:180px;padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px}
+.toolbar select{padding:7px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;max-width:180px}
+.btn{padding:7px 13px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-primary{background:#2563eb;color:#fff}
+.btn-success{background:#16a34a;color:#fff}
+.btn-warning{background:#d97706;color:#fff}
+.btn-danger{background:#dc2626;color:#fff}
+.btn-secondary{background:#64748b;color:#fff}
+.btn-sm{padding:4px 9px;font-size:12px}
+
+/* ── Table ── */
+.table-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e2e8f0}
+table{width:100%;border-collapse:collapse;min-width:780px}
+th{background:#1e3a5f;color:#fff;padding:9px 10px;text-align:left;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{background:#2a4f7f}
+th .sort-icon{margin-left:4px;opacity:.6}
+td{padding:8px 10px;border-bottom:1px solid #e2e8f0;vertical-align:top;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f1f5f9}
+tr.revisio-antiga td{background:#fffbeb}
+tr.revisio-antiga:hover td{background:#fef3c7}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge-si{background:#dcfce7;color:#166534}
+.badge-no{background:#fee2e2;color:#991b1b}
+.badge-primaria{background:#dbeafe;color:#1e40af}
+.badge-secundaria{background:#fef3c7;color:#92400e}
+.badge-antiga{background:#fed7aa;color:#9a3412;font-size:11px}
+.nom-font{font-weight:600;color:#1e3a5f;max-width:220px}
+td.accions{white-space:nowrap}
+.empty-state{text-align:center;padding:40px 20px;color:#64748b}
+
+/* ── Form ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group.full{grid-column:1/-1}
+label{font-size:12px;font-weight:600;color:#374151}
+input[type=text],input[type=url],input[type=date],select,textarea{width:100%;padding:7px 9px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+textarea{resize:vertical;min-height:64px}
+.form-hint{font-size:11px;color:#6b7280}
+.form-actions{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0}
+#form-titol{font-size:16px;font-weight:700;color:#1e3a5f;margin-bottom:14px}
+
+/* ── Modal ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;overflow-y:auto;padding:30px 16px}
+.overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:#fff;border-radius:10px;max-width:760px;width:100%;padding:22px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:10px}
+.modal-header h2{font-size:16px;color:#1e3a5f;font-weight:700}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#64748b;line-height:1;padding:0 4px}
+.modal-close:hover{color:#1e293b}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail-item{background:#f8fafc;border-radius:6px;padding:9px 11px;border-left:3px solid #2563eb}
+.detail-item.full{grid-column:1/-1;border-left-color:#16a34a}
+.detail-item.warn{border-left-color:#d97706}
+.detail-label{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.detail-value{font-size:13px;color:#1e293b;word-break:break-word}
+.detail-value a{color:#2563eb}
+
+/* ── Glossari ── */
+#glossari-area{width:100%;min-height:360px;font-family:inherit;font-size:14px;padding:12px;border:1px solid #cbd5e1;border-radius:6px;line-height:1.6}
+.glossari-hint{font-size:12px;color:#6b7280;margin-bottom:8px}
+
+/* ── Alerta de revisió antiga ── */
+.alerta-revisio{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#92400e}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+  .detail-grid{grid-template-columns:1fr}
+  .detail-item.full{grid-column:1}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+  <h1>Catàleg de Fonts de Dades</h1>
+  <span id="comptador-fonts"></span>
+</header>
+
+<nav class="tabs">
+  <button class="active" onclick="showTab('cataleg')">Catàleg</button>
+  <button onclick="showTab('formulari')">Afegir / Editar</button>
+  <button onclick="showTab('glossari')">Glossari i notes</button>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     TAB 1 · CATÀLEG
+════════════════════════════════════════════ -->
+<div id="panel-cataleg" class="panel active">
+
+  <div class="toolbar">
+    <input type="text" id="cerca" placeholder="Cerca en tots els camps…" oninput="renderTaula()" autocomplete="off">
+    <select id="filtre-tema" onchange="renderTaula()">
+      <option value="">Tots els temes</option>
+    </select>
+    <select id="filtre-ambit" onchange="renderTaula()">
+      <option value="">Tots els àmbits</option>
+      <option>Catalunya</option>
+      <option>Província</option>
+      <option>Comarca</option>
+      <option>Municipi</option>
+      <option>Secció censal</option>
+      <option>UE / Estatal</option>
+    </select>
+    <select id="filtre-format" onchange="renderTaula()">
+      <option value="">Tots els formats</option>
+      <option>CSV-XLSX descarregable</option>
+      <option>API</option>
+      <option>Consulta interactiva</option>
+      <option>Només PDF</option>
+      <option>Només web</option>
+    </select>
+    <select id="filtre-obertes" onchange="renderTaula()">
+      <option value="">Obertes: totes</option>
+      <option value="Sí">Sí (obertes)</option>
+      <option value="No">No (tancades)</option>
+    </select>
+    <select id="filtre-fiabilitat" onchange="renderTaula()">
+      <option value="">Tota la fiabilitat</option>
+      <option>Primària oficial</option>
+      <option>Secundària o agregador</option>
+    </select>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="novaFont()">+ Afegir font nova</button>
+    <button class="btn btn-success" onclick="exportarCSV()">Exportar CSV</button>
+    <label class="btn btn-warning" style="cursor:pointer">
+      Importar CSV
+      <input type="file" accept=".csv" onchange="importarCSV(event)" style="display:none">
+    </label>
+    <button class="btn btn-secondary btn-sm" onclick="netejarFiltres()">Netejar filtres</button>
+  </div>
+
+  <div id="alerta-revisio-antiga" class="alerta-revisio" style="display:none">
+    Atencio: hi ha fonts amb l'última revisió de fa més d'un any. Les files marcades en groc necessiten ser revisades.
+  </div>
+
+  <div class="table-wrap">
+    <table id="taula">
+      <thead>
+        <tr>
+          <th onclick="sortPer('nom')">Nom de la font <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('organisme')">Organisme <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('tema')">Tema <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('ambit')">Àmbit <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('format_acces')">Format <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('dades_obertes')">Obertes <span class="sort-icon">↕</span></th>
+          <th onclick="sortPer('data_revisio')">Revisió <span class="sort-icon">↕</span></th>
+          <th>Accions</th>
+        </tr>
+      </thead>
+      <tbody id="cos-taula"></tbody>
+    </table>
+  </div>
+  <div id="empty-state" class="empty-state" style="display:none">
+    No s'han trobat fonts amb els filtres actuals.
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 2 · FORMULARI
+════════════════════════════════════════════ -->
+<div id="panel-formulari" class="panel">
+  <div id="form-titol">Nova font</div>
+  <form id="form-font" onsubmit="desarFont(event)">
+    <input type="hidden" id="f-id">
+    <div class="form-grid">
+
+      <div class="form-group full">
+        <label for="f-nom">Nom de la font / base de dades *</label>
+        <input type="text" id="f-nom" required placeholder="Títol oficial exacte">
+      </div>
+
+      <div class="form-group">
+        <label for="f-organisme">Organisme productor *</label>
+        <input type="text" id="f-organisme" required placeholder="Ex: Idescat, INE, Eurostat…">
+      </div>
+
+      <div class="form-group">
+        <label for="f-tema">Tema *</label>
+        <select id="f-tema" required></select>
+      </div>
+
+      <div class="form-group">
+        <label for="f-subtema">Subtema (text lliure)</label>
+        <input type="text" id="f-subtema" placeholder="Ex: Atur registrat, Padró municipal…">
+      </div>
+
+      <div class="form-group">
+        <label for="f-ambit">Àmbit territorial i desagregació màxima</label>
+        <input type="text" id="f-ambit" placeholder="Ex: Catalunya / província / comarca">
+      </div>
+
+      <div class="form-group full">
+        <label for="f-descripcio">Descripció breu (1-2 frases)</label>
+        <textarea id="f-descripcio" rows="2" placeholder="Què conté aquesta font i per a què serveix principalment?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="f-serie">Sèrie temporal</label>
+        <input type="text" id="f-serie" placeholder="Ex: 2000 – actualitat">
+      </div>
+
+      <div class="form-group">
+        <label for="f-frequencia">Freqüència d'actualització</label>
+        <select id="f-frequencia">
+          <option value="">— Selecciona —</option>
+          <option>Mensual</option>
+          <option>Trimestral</option>
+          <option>Semestral</option>
+          <option>Anual</option>
+          <option>Puntual</option>
+          <option>Irregular</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="f-format">Format d'accés</label>
+        <input type="text" id="f-format" placeholder="Ex: CSV-XLSX descarregable / API">
+      </div>
+
+      <div class="form-group">
+        <label for="f-obertes">Dades obertes</label>
+        <select id="f-obertes">
+          <option value="">— Selecciona —</option>
+          <option>Sí</option>
+          <option>No</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label for="f-llicencia">Llicència</label>
+        <input type="text" id="f-llicencia" placeholder="Ex: Creative Commons BY, Reutilització sense restriccions…">
+      </div>
+
+      <div class="form-group full">
+        <label for="f-url">URL directa a les dades</label>
+        <input type="url" id="f-url" placeholder="https://…">
+      </div>
+
+      <div class="form-group full">
+        <label for="f-advertiments">Advertiments metodològics</label>
+        <textarea id="f-advertiments" rows="3" placeholder="Ruptures de sèrie, canvis de definició, anys anòmals, confusions habituals…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="f-fiabilitat">Nivell de fiabilitat</label>
+        <select id="f-fiabilitat">
+          <option value="">— Selecciona —</option>
+          <option>Primària oficial</option>
+          <option>Secundària o agregador</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="f-data-revisio">Data de l'última revisió de l'enllaç</label>
+        <input type="date" id="f-data-revisio">
+      </div>
+
+      <div class="form-group full">
+        <label for="f-angles">Possibles angles o reportatges que permet</label>
+        <textarea id="f-angles" rows="2" placeholder="Idees de reportatge que es poden fer amb aquesta font…"></textarea>
+      </div>
+
+      <div class="form-group full">
+        <label for="f-cobertura">Cobertura prèvia (qui ja l'ha fet servir)</label>
+        <textarea id="f-cobertura" rows="2" placeholder="Ex: La Vanguardia (2023), El País (2022)…"></textarea>
+      </div>
+
+    </div><!-- /form-grid -->
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Desar font</button>
+      <button type="button" class="btn btn-secondary" onclick="showTab('cataleg')">Cancel·lar</button>
+      <button type="button" id="btn-esborrar-form" class="btn btn-danger" style="display:none;margin-left:auto" onclick="esborrarDesDeForm()">Esborrar aquesta font</button>
+    </div>
+  </form>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 3 · GLOSSARI
+════════════════════════════════════════════ -->
+<div id="panel-glossari" class="panel">
+  <p class="glossari-hint">Espai per a notes metodològiques, definicions i conceptes recurrents. Escriu amb format lliure. Es desa automàticament.</p>
+  <textarea id="glossari-area" oninput="desarGlossari()"></textarea>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MODAL DE DETALLS
+════════════════════════════════════════════ -->
+<div id="overlay" class="overlay" onclick="tancarModal(event)">
+  <div class="modal" id="modal-contingut">
+    <div class="modal-header">
+      <h2 id="modal-titol"></h2>
+      <button class="modal-close" onclick="document.getElementById('overlay').classList.remove('open')">✕</button>
+    </div>
+    <div id="modal-cos"></div>
+    <div style="display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0">
+      <button class="btn btn-primary" id="modal-btn-editar">Editar</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('overlay').classList.remove('open')">Tancar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════
+const TEMES = [
+  "Mercat de treball i relacions laborals",
+  "Economia i empresa",
+  "Demografia i població",
+  "Habitatge",
+  "Salut",
+  "Educació",
+  "Medi ambient i energia",
+  "Mobilitat i transport",
+  "Seguretat i justícia",
+  "Cultura i llengua",
+  "Sector públic i pressupostos",
+  "Eleccions i política"
+];
+
+const CAMPS_CSV = [
+  'id','nom','organisme','tema','subtema','descripcio','ambit',
+  'serie','frequencia','format_acces','dades_obertes','llicencia',
+  'url','advertiments','fiabilitat','angles','cobertura','data_revisio'
+];
+
+// ═══════════════════════════════════════════════════════
+// DADES D'EXEMPLE
+// ═══════════════════════════════════════════════════════
+const EXEMPLES = [
+  {
+    id: "ex1",
+    nom: "Estadística de Regulació d'Ocupació (ERO/ERTO)",
+    organisme: "Ministeri de Treball i Economia Social",
+    tema: "Mercat de treball i relacions laborals",
+    subtema: "Expedients de regulació d'ocupació",
+    descripcio: "Estadística mensual d'expedients de regulació d'ocupació per comunitat autònoma i província. Inclou tant ERO d'extinció com ERTO (suspensió i reducció de jornada).",
+    ambit: "Catalunya / província",
+    serie: "2000 – actualitat",
+    frequencia: "Mensual",
+    format_acces: "CSV-XLSX descarregable / Consulta interactiva",
+    dades_obertes: "Sí",
+    llicencia: "Reutilització sense restriccions",
+    url: "https://www.mites.gob.es/estadisticas/reg/welcome.htm",
+    advertiments: "RUPTURA DE SÈRIE EL 2012 per la reforma laboral: les dades anteriors i posteriors no són directament comparables. NO confondre ERO d'extinció amb ERTO (suspensió/reducció): comptabilitzen diferent. A partir de març 2020, els ERTO COVID distorsionen fortament les sèries.",
+    fiabilitat: "Primària oficial",
+    angles: "Comparativa ERO per sectors i comarques; impacte de la pandèmia via ERTO; evolució pre/post reforma laboral 2012.",
+    cobertura: "La Vanguardia (2020), El Periódico (2021), El País (2023)",
+    data_revisio: "2025-01-15"
+  },
+  {
+    id: "ex2",
+    nom: "Observatori del Treball i Model Productiu",
+    organisme: "Departament d'Empresa i Treball — Generalitat de Catalunya",
+    tema: "Mercat de treball i relacions laborals",
+    subtema: "Mercat de treball, ocupació, atur, salaris",
+    descripcio: "Portal estadístic de referència per al mercat de treball a Catalunya. Inclou dades d'afiliació a la Seguretat Social, atur registrat al SOC, contractació i salaris amb desagregació comarcal.",
+    ambit: "Catalunya / província / comarca",
+    serie: "2000 – actualitat",
+    frequencia: "Mensual",
+    format_acces: "CSV-XLSX descarregable / Consulta interactiva / API",
+    dades_obertes: "Sí",
+    llicencia: "Creative Commons BY 4.0",
+    url: "https://observatoritreball.gencat.cat",
+    advertiments: "Diferència clau: l'atur registrat (SOC) i l'atur EPA (enquesta) usen metodologies incompatibles i no se sumen. Algunes sèries comarcals no estan disponibles per a tots els indicadors. Compte amb canvis de classificació sectorial (CCAE) el 2009.",
+    fiabilitat: "Primària oficial",
+    angles: "Evolució de l'atur per comarques i sectors; bretxa salarial de gènere; estacionalitat turística i el seu impacte en l'ocupació.",
+    cobertura: "RAC1 (mensual), Nació Digital (mensual), Ara (2023)",
+    data_revisio: "2025-02-10"
+  },
+  {
+    id: "ex3",
+    nom: "Padró Municipal d'Habitants — Idescat",
+    organisme: "Institut d'Estadística de Catalunya (Idescat)",
+    tema: "Demografia i població",
+    subtema: "Padró municipal, estructura de la població",
+    descripcio: "Dades de població resident per municipi, comarca i província amb desagregació per sexe, grups d'edat i país de naixement. Font primària per a qualsevol anàlisi demogràfica a Catalunya.",
+    ambit: "Catalunya / província / comarca / municipi",
+    serie: "1991 – actualitat",
+    frequencia: "Anual",
+    format_acces: "CSV-XLSX descarregable / API / Consulta interactiva",
+    dades_obertes: "Sí",
+    llicencia: "Creative Commons BY 4.0",
+    url: "https://www.idescat.cat/poblacio/",
+    advertiments: "El padró no capta bé la immigració irregular ni els residents temporals. Canvi metodològic important el 2000 (nou padró continu). Municipis molt petits (<100 habitants) poden tenir dades suprimides per protecció de dades.",
+    fiabilitat: "Primària oficial",
+    angles: "Envelliment per comarques; evolució de la immigració; despoblació rural; comparativa entre municipis.",
+    cobertura: "El País (2022), Ara (2023), BTV (2024)",
+    data_revisio: "2025-03-20"
+  },
+  {
+    id: "ex4",
+    nom: "Labour Force Survey (LFS) — Eurostat",
+    organisme: "Eurostat (Comissió Europea)",
+    tema: "Mercat de treball i relacions laborals",
+    subtema: "Mercat de treball europeu, comparativa internacional UE",
+    descripcio: "Enquesta de forces de treball harmonitzada a nivell europeu. Ofereix dades comparables d'ocupació, atur i inactivitat per a tots els estats membres i regions NUTS-2 (incloent Catalunya).",
+    ambit: "Catalunya (NUTS-2) / Espanya / UE-27",
+    serie: "1983 – actualitat",
+    frequencia: "Trimestral / Anual",
+    format_acces: "CSV-XLSX descarregable / API / Consulta interactiva",
+    dades_obertes: "Sí",
+    llicencia: "Eurostat copyright — reutilització lliure amb atribució",
+    url: "https://ec.europa.eu/eurostat/web/lfs/data",
+    advertiments: "Les dades per NUTS-2 (Catalunya) no estan disponibles per a tots els indicadors. La comparació directa amb l'EPA espanyola és delicada: metodologies similars però no idèntiques. Retard de publicació habitual de 3-6 mesos.",
+    fiabilitat: "Primària oficial",
+    angles: "Taxa d'atur de Catalunya vs. mitjana UE; joves que ni estudien ni treballen (NEET); bretxa de gènere al mercat laboral europeu.",
+    cobertura: "Ara (2023), El Confidencial (2022), La Vanguardia (2023)",
+    data_revisio: "2024-04-05"
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ESTAT
+// ═══════════════════════════════════════════════════════
+let fonts = [];
+let glossari = "";
+let sortColumna = "nom";
+let sortAsc = true;
+let editantId = null;
+
+// ═══════════════════════════════════════════════════════
+// EMMAGATZEMATGE (localStorage)
+// ═══════════════════════════════════════════════════════
+function carregarDades() {
+  const raw = localStorage.getItem("cataleg_fonts");
+  if (raw) {
+    try { fonts = JSON.parse(raw); } catch(e) { fonts = []; }
+  } else {
+    // Primera vegada: carrega exemples
+    fonts = EXEMPLES;
+    desarDades();
+  }
+  glossari = localStorage.getItem("cataleg_glossari") || GLOSSARI_INICIAL;
+}
+
+function desarDades() {
+  localStorage.setItem("cataleg_fonts", JSON.stringify(fonts));
+}
+
+function desarGlossari() {
+  glossari = document.getElementById("glossari-area").value;
+  localStorage.setItem("cataleg_glossari", glossari);
+}
+
+// ═══════════════════════════════════════════════════════
+// GENERACIÓ D'IDs
+// ═══════════════════════════════════════════════════════
+function nouId() {
+  return "f" + Date.now() + Math.random().toString(36).slice(2,6);
+}
+
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
+function showTab(nom) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + nom).classList.add('active');
+  const idx = {cataleg:0, formulari:1, glossari:2}[nom];
+  document.querySelectorAll('nav.tabs button')[idx].classList.add('active');
+
+  if (nom === 'glossari') {
+    document.getElementById('glossari-area').value = glossari;
+  }
+  if (nom === 'cataleg') {
+    renderTaula();
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER TAULA
+// ═══════════════════════════════════════════════════════
+function getDadesFiltrades() {
+  const cerca = document.getElementById('cerca').value.toLowerCase().trim();
+  const filtreTema = document.getElementById('filtre-tema').value;
+  const filtreAmbit = document.getElementById('filtre-ambit').value.toLowerCase();
+  const filtreFormat = document.getElementById('filtre-format').value.toLowerCase();
+  const filtreObertes = document.getElementById('filtre-obertes').value;
+  const filtreFiabilitat = document.getElementById('filtre-fiabilitat').value;
+
+  return fonts.filter(f => {
+    if (cerca) {
+      const tot = Object.values(f).join(' ').toLowerCase();
+      if (!tot.includes(cerca)) return false;
+    }
+    if (filtreTema && f.tema !== filtreTema) return false;
+    if (filtreAmbit && !f.ambit.toLowerCase().includes(filtreAmbit)) return false;
+    if (filtreFormat && !f.format_acces.toLowerCase().includes(filtreFormat)) return false;
+    if (filtreObertes && f.dades_obertes !== filtreObertes) return false;
+    if (filtreFiabilitat && f.fiabilitat !== filtreFiabilitat) return false;
+    return true;
+  }).sort((a, b) => {
+    const va = (a[sortColumna] || '').toLowerCase();
+    const vb = (b[sortColumna] || '').toLowerCase();
+    return sortAsc ? va.localeCompare(vb,'ca') : vb.localeCompare(va,'ca');
+  });
+}
+
+function esAntiga(dataStr) {
+  if (!dataStr) return false;
+  const d = new Date(dataStr);
+  const ara = new Date();
+  const unAny = 365 * 24 * 60 * 60 * 1000;
+  return (ara - d) > unAny;
+}
+
+function renderTaula() {
+  const dades = getDadesFiltrades();
+  const cos = document.getElementById('cos-taula');
+  const empty = document.getElementById('empty-state');
+  const alerta = document.getElementById('alerta-revisio-antiga');
+
+  // Alerta global de revisions antigues
+  const hiHaAntiques = fonts.some(f => esAntiga(f.data_revisio));
+  alerta.style.display = hiHaAntiques ? 'block' : 'none';
+
+  // Comptador
+  document.getElementById('comptador-fonts').textContent =
+    fonts.length === 1 ? '1 font' : fonts.length + ' fonts';
+
+  if (dades.length === 0) {
+    cos.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  cos.innerHTML = dades.map(f => {
+    const antiga = esAntiga(f.data_revisio);
+    const rowClass = antiga ? 'revisio-antiga' : '';
+    const badgeObertes = f.dades_obertes === 'Sí'
+      ? '<span class="badge badge-si">Sí</span>'
+      : f.dades_obertes === 'No'
+        ? '<span class="badge badge-no">No</span>'
+        : '<span style="color:#94a3b8">—</span>';
+    const badgeFiab = f.fiabilitat === 'Primària oficial'
+      ? '<span class="badge badge-primaria">Primària</span>'
+      : f.fiabilitat
+        ? '<span class="badge badge-secundaria">Secundària</span>'
+        : '';
+    const dataRevisio = f.data_revisio
+      ? f.data_revisio + (antiga ? ' <span class="badge badge-antiga">Revisar!</span>' : '')
+      : '<span style="color:#94a3b8">—</span>';
+
+    return `<tr class="${rowClass}">
+      <td><div class="nom-font">${esc(f.nom)}</div>
+          ${badgeFiab}</td>
+      <td>${esc(f.organisme)}</td>
+      <td>${esc(f.tema)}</td>
+      <td>${esc(f.ambit)}</td>
+      <td>${esc(f.format_acces)}</td>
+      <td>${badgeObertes}</td>
+      <td>${dataRevisio}</td>
+      <td class="accions">
+        <button class="btn btn-primary btn-sm" onclick="obrirDetalls('${f.id}')">Detalls</button>
+        <button class="btn btn-secondary btn-sm" onclick="editarFont('${f.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="esborrarFont('${f.id}')">Esborrar</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL DE DETALLS
+// ═══════════════════════════════════════════════════════
+function obrirDetalls(id) {
+  const f = fonts.find(x => x.id === id);
+  if (!f) return;
+
+  document.getElementById('modal-titol').textContent = f.nom;
+  document.getElementById('modal-btn-editar').onclick = () => {
+    document.getElementById('overlay').classList.remove('open');
+    editarFont(id);
+  };
+
+  const camps = [
+    {k:'organisme', label:'Organisme productor', full:false},
+    {k:'tema', label:'Tema', full:false},
+    {k:'subtema', label:'Subtema', full:false},
+    {k:'ambit', label:'Àmbit territorial', full:false},
+    {k:'serie', label:'Sèrie temporal', full:false},
+    {k:'frequencia', label:'Freqüència', full:false},
+    {k:'format_acces', label:'Format d\'accés', full:false},
+    {k:'dades_obertes', label:'Dades obertes', full:false},
+    {k:'llicencia', label:'Llicència', full:false},
+    {k:'fiabilitat', label:'Fiabilitat', full:false},
+    {k:'data_revisio', label:'Última revisió', full:false},
+    {k:'descripcio', label:'Descripció', full:true},
+    {k:'url', label:'URL', full:true, isUrl:true},
+    {k:'advertiments', label:'Advertiments metodològics', full:true, isWarn:true},
+    {k:'angles', label:'Possibles angles / reportatges', full:true},
+    {k:'cobertura', label:'Cobertura prèvia', full:true},
+  ];
+
+  const html = '<div class="detail-grid">' + camps.map(c => {
+    const val = f[c.k] || '<em style="color:#94a3b8">No especificat</em>';
+    const displayVal = c.isUrl && f[c.k]
+      ? `<a href="${esc(f[c.k])}" target="_blank">${esc(f[c.k])}</a>`
+      : esc(f[c.k]) || '<em style="color:#94a3b8">No especificat</em>';
+    const cls = 'detail-item' + (c.full?' full':'') + (c.isWarn?' warn':'');
+    return `<div class="${cls}">
+      <div class="detail-label">${c.label}</div>
+      <div class="detail-value">${displayVal}</div>
+    </div>`;
+  }).join('') + '</div>';
+
+  document.getElementById('modal-cos').innerHTML = html;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function tancarModal(e) {
+  if (e.target === document.getElementById('overlay')) {
+    document.getElementById('overlay').classList.remove('open');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// FORMULARI — CRUD
+// ═══════════════════════════════════════════════════════
+function novaFont() {
+  editantId = null;
+  document.getElementById('form-titol').textContent = 'Nova font';
+  document.getElementById('form-font').reset();
+  document.getElementById('f-id').value = '';
+  document.getElementById('btn-esborrar-form').style.display = 'none';
+  // Data d'avui per defecte
+  document.getElementById('f-data-revisio').value = avui();
+  showTab('formulari');
+}
+
+function editarFont(id) {
+  const f = fonts.find(x => x.id === id);
+  if (!f) return;
+  editantId = id;
+  document.getElementById('form-titol').textContent = 'Editar font: ' + f.nom;
+  document.getElementById('f-id').value = f.id;
+  document.getElementById('f-nom').value = f.nom || '';
+  document.getElementById('f-organisme').value = f.organisme || '';
+  document.getElementById('f-tema').value = f.tema || '';
+  document.getElementById('f-subtema').value = f.subtema || '';
+  document.getElementById('f-descripcio').value = f.descripcio || '';
+  document.getElementById('f-ambit').value = f.ambit || '';
+  document.getElementById('f-serie').value = f.serie || '';
+  document.getElementById('f-frequencia').value = f.frequencia || '';
+  document.getElementById('f-format').value = f.format_acces || '';
+  document.getElementById('f-obertes').value = f.dades_obertes || '';
+  document.getElementById('f-llicencia').value = f.llicencia || '';
+  document.getElementById('f-url').value = f.url || '';
+  document.getElementById('f-advertiments').value = f.advertiments || '';
+  document.getElementById('f-fiabilitat').value = f.fiabilitat || '';
+  document.getElementById('f-angles').value = f.angles || '';
+  document.getElementById('f-cobertura').value = f.cobertura || '';
+  document.getElementById('f-data-revisio').value = f.data_revisio || '';
+  document.getElementById('btn-esborrar-form').style.display = 'block';
+  showTab('formulari');
+}
+
+function desarFont(e) {
+  e.preventDefault();
+  const id = document.getElementById('f-id').value || nouId();
+  const nova = {
+    id,
+    nom: document.getElementById('f-nom').value.trim(),
+    organisme: document.getElementById('f-organisme').value.trim(),
+    tema: document.getElementById('f-tema').value,
+    subtema: document.getElementById('f-subtema').value.trim(),
+    descripcio: document.getElementById('f-descripcio').value.trim(),
+    ambit: document.getElementById('f-ambit').value.trim(),
+    serie: document.getElementById('f-serie').value.trim(),
+    frequencia: document.getElementById('f-frequencia').value,
+    format_acces: document.getElementById('f-format').value.trim(),
+    dades_obertes: document.getElementById('f-obertes').value,
+    llicencia: document.getElementById('f-llicencia').value.trim(),
+    url: document.getElementById('f-url').value.trim(),
+    advertiments: document.getElementById('f-advertiments').value.trim(),
+    fiabilitat: document.getElementById('f-fiabilitat').value,
+    angles: document.getElementById('f-angles').value.trim(),
+    cobertura: document.getElementById('f-cobertura').value.trim(),
+    data_revisio: document.getElementById('f-data-revisio').value,
+  };
+  const idx = fonts.findIndex(x => x.id === id);
+  if (idx >= 0) { fonts[idx] = nova; } else { fonts.push(nova); }
+  desarDades();
+  showTab('cataleg');
+}
+
+function esborrarFont(id) {
+  const f = fonts.find(x => x.id === id);
+  if (!f) return;
+  if (!confirm('Segur que vols esborrar "' + f.nom + '"? Aquesta acció no es pot desfer.')) return;
+  fonts = fonts.filter(x => x.id !== id);
+  desarDades();
+  renderTaula();
+}
+
+function esborrarDesDeForm() {
+  const id = document.getElementById('f-id').value;
+  esborrarFont(id);
+  if (!fonts.find(x => x.id === id)) showTab('cataleg');
+}
+
+// ═══════════════════════════════════════════════════════
+// ORDENAR
+// ═══════════════════════════════════════════════════════
+function sortPer(columna) {
+  if (sortColumna === columna) { sortAsc = !sortAsc; }
+  else { sortColumna = columna; sortAsc = true; }
+  renderTaula();
+}
+
+function netejarFiltres() {
+  document.getElementById('cerca').value = '';
+  document.getElementById('filtre-tema').value = '';
+  document.getElementById('filtre-ambit').value = '';
+  document.getElementById('filtre-format').value = '';
+  document.getElementById('filtre-obertes').value = '';
+  document.getElementById('filtre-fiabilitat').value = '';
+  renderTaula();
+}
+
+// ═══════════════════════════════════════════════════════
+// CSV EXPORT
+// ═══════════════════════════════════════════════════════
+function escaparCSV(val) {
+  const s = String(val === null || val === undefined ? '' : val);
+  if (s.includes('"') || s.includes(',') || s.includes('\n') || s.includes('\r')) {
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
+}
+
+function exportarCSV() {
+  const capçalera = CAMPS_CSV.map(escaparCSV).join(',');
+  const files = fonts.map(f =>
+    CAMPS_CSV.map(c => escaparCSV(f[c] || '')).join(',')
+  );
+  const contingut = '﻿' + capçalera + '\r\n' + files.join('\r\n');
+  const blob = new Blob([contingut], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'cataleg-fonts-' + avui() + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════
+// CSV IMPORT
+// ═══════════════════════════════════════════════════════
+function parseCSV(text) {
+  // Elimina BOM si n'hi ha
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+  const files = [];
+  let fila = [], camp = '', dins_cometes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"') {
+      if (dins_cometes && text[i+1] === '"') { camp += '"'; i++; }
+      else { dins_cometes = !dins_cometes; }
+    } else if (c === ',' && !dins_cometes) {
+      fila.push(camp); camp = '';
+    } else if ((c === '\n' || c === '\r') && !dins_cometes) {
+      if (c === '\r' && text[i+1] === '\n') i++;
+      fila.push(camp); camp = '';
+      files.push(fila); fila = [];
+    } else {
+      camp += c;
+    }
+  }
+  if (camp || fila.length) { fila.push(camp); files.push(fila); }
+  return files;
+}
+
+function importarCSV(event) {
+  const fitxer = event.target.files[0];
+  if (!fitxer) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const files = parseCSV(e.target.result);
+    if (files.length < 2) { alert('El fitxer CSV sembla buit o incorrecte.'); return; }
+    const caps = files[0].map(c => c.trim().toLowerCase());
+    const noves = [];
+    for (let i = 1; i < files.length; i++) {
+      const fila = files[i];
+      if (fila.every(c => !c.trim())) continue; // salta files buides
+      const obj = {};
+      caps.forEach((cap, idx) => { obj[cap] = fila[idx] || ''; });
+      if (!obj.id) obj.id = nouId();
+      if (obj.nom || obj.organisme) noves.push(obj);
+    }
+    if (noves.length === 0) { alert('No s\'han trobat files vàlides al CSV.'); return; }
+    const accio = confirm(
+      'S\'han trobat ' + noves.length + ' fonts al CSV.\n\n' +
+      'Fes clic a "Acceptar" per SUBSTITUIR tot el catàleg actual.\n' +
+      'Fes clic a "Cancel·lar" per AFEGIR les fonts noves al catàleg existent.'
+    );
+    if (accio) { fonts = noves; }
+    else {
+      // Afegir sense duplicar per ID
+      noves.forEach(n => {
+        const idx = fonts.findIndex(f => f.id === n.id);
+        if (idx >= 0) { fonts[idx] = n; } else { fonts.push(n); }
+      });
+    }
+    desarDades();
+    renderTaula();
+    event.target.value = '';
+    alert('Importació completada. ' + noves.length + ' fonts processades.');
+  };
+  reader.readAsText(fitxer, 'UTF-8');
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILITATS
+// ═══════════════════════════════════════════════════════
+function esc(str) {
+  return String(str || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function avui() {
+  return new Date().toISOString().slice(0,10);
+}
+
+// ═══════════════════════════════════════════════════════
+// GLOSSARI INICIAL
+// ═══════════════════════════════════════════════════════
+const GLOSSARI_INICIAL = `GLOSSARI I NOTES METODOLÒGIQUES
+================================
+
+[Edita aquest espai lliurement per afegir definicions i notes]
+
+CONCEPTES CLAU
+--------------
+
+EPA (Enquesta de Població Activa)
+  Enquesta trimestral de l'INE basada en una mostra de llars. Mesura l'atur
+  d'acord amb la definició internacional de l'OIT. NO coincideix amb l'atur
+  registrat al SOC/SEPE.
+
+Atur registrat (SOC / SEPE)
+  Nombre de persones inscrites com a demandants d'ocupació als serveis públics
+  d'ocupació. NO inclou qui no s'inscriu. Sempre inferior a l'atur EPA.
+
+ERO (Expedient de Regulació d'Ocupació)
+  Procediment laboral que pot comportar acomiadaments col·lectius (extinció),
+  suspensions de contracte o reduccions de jornada. Des de 2012 es distingeix
+  entre ERO d'extinció i ERTO (suspensió/reducció).
+
+ERTO (Expedient de Regulació Temporal d'Ocupació)
+  Mesura temporal de suspensió de contractes o reducció de jornada. Gran ús
+  durant la pandèmia (2020-2022). Les sèries del 2020 en endavant no són
+  comparables amb les anteriors.
+
+NUTS-2
+  Nomenclatura d'Unitats Territorials Estadístiques de la UE. Catalunya és
+  la regió ES51 (NUTS-2). Permet comparar Catalunya amb regions europees.
+
+Padró municipal
+  Registre administratiu dels habitants d'un municipi. No coincideix exactament
+  amb la població real (no capta immigrants irregulars, baixa sensibilitat als
+  canvis recents).
+
+
+ADVERTIMENTS RECURRENTS
+-----------------------
+- No comparar dades d'abans i després de canvis metodològics sense ajust.
+- Per a Catalunya, sempre especificar si la font inclou o exclou Arán.
+- Les dades de municipis petits sovint estan suprimides per protecció de dades.
+- API vs descàrrega: les APIs poden canviar sense avís; desar sempre còpia local.
+`;
+
+// ═══════════════════════════════════════════════════════
+// INICIALITZACIÓ
+// ═══════════════════════════════════════════════════════
+function inicialitzar() {
+  // Omplir dropdown de temes
+  const selectTema = document.getElementById('filtre-tema');
+  const selectFormTema = document.getElementById('f-tema');
+  TEMES.forEach(t => {
+    selectTema.innerHTML += `<option value="${esc(t)}">${esc(t)}</option>`;
+    selectFormTema.innerHTML += `<option value="${esc(t)}">${esc(t)}</option>`;
+  });
+
+  carregarDades();
+  renderTaula();
+}
+
+inicialitzar();
+</script>
+</body>
+</html>
