@@ -37,6 +37,8 @@ nav.tabs button:hover:not(.active){background:#d6e3f0}
 .btn-danger{background:#dc2626;color:#fff}
 .btn-secondary{background:#64748b;color:#fff}
 .btn-sm{padding:4px 9px;font-size:12px}
+.btn-outline{background:#fff;border:2px solid #2563eb;color:#2563eb;padding:5px 11px}
+.btn-outline.actiu{background:#2563eb;color:#fff}
 
 /* ── Table ── */
 .table-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e2e8f0}
@@ -49,6 +51,11 @@ tr:last-child td{border-bottom:none}
 tr:hover td{background:#f1f5f9}
 tr.revisio-antiga td{background:#fffbeb}
 tr.revisio-antiga:hover td{background:#fef3c7}
+/* Capçalera de grup (agrupació per àmbit) */
+tr.grup-cap td{background:#e8f0fb;color:#1e3a5f;font-weight:700;font-size:13px;
+  padding:10px 10px 8px;border-bottom:2px solid #2563eb;border-top:4px solid #dbe4f0;cursor:default}
+tr.grup-cap:first-child td{border-top:none}
+tr.grup-cap:hover td{background:#e8f0fb}
 .badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
 .badge-si{background:#dcfce7;color:#166534}
 .badge-no{background:#fee2e2;color:#991b1b}
@@ -86,6 +93,10 @@ textarea{resize:vertical;min-height:64px}
 .detail-label{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
 .detail-value{font-size:13px;color:#1e293b;word-break:break-word}
 .detail-value a{color:#2563eb}
+/* Llista d'àmbits dins el modal de gestió */
+#llista-ambits li{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:6px;border:1px solid #e2e8f0;margin-bottom:6px;background:#f8fafc}
+#llista-ambits li span{font-size:13px;color:#1e293b}
+#llista-ambits .n-usos{font-size:11px;color:#94a3b8;margin-left:6px}
 
 /* ── Glossari ── */
 #glossari-area{width:100%;min-height:360px;font-family:inherit;font-size:14px;padding:12px;border:1px solid #cbd5e1;border-radius:6px;line-height:1.6}
@@ -127,14 +138,9 @@ textarea{resize:vertical;min-height:64px}
     <select id="filtre-tema" onchange="renderTaula()">
       <option value="">Tots els temes</option>
     </select>
+    <!-- Àmbit: es popula dinàmicament des de la llista d'àmbits editables -->
     <select id="filtre-ambit" onchange="renderTaula()">
       <option value="">Tots els àmbits</option>
-      <option>Catalunya</option>
-      <option>Província</option>
-      <option>Comarca</option>
-      <option>Municipi</option>
-      <option>Secció censal</option>
-      <option>UE / Estatal</option>
     </select>
     <select id="filtre-format" onchange="renderTaula()">
       <option value="">Tots els formats</option>
@@ -164,6 +170,7 @@ textarea{resize:vertical;min-height:64px}
       <input type="file" accept=".csv" onchange="importarCSV(event)" style="display:none">
     </label>
     <button class="btn btn-secondary btn-sm" onclick="netejarFiltres()">Netejar filtres</button>
+    <button id="btn-agrupar" class="btn btn-outline btn-sm" onclick="toggleAgrupar()">Agrupar per àmbit</button>
   </div>
 
   <div id="alerta-revisio-antiga" class="alerta-revisio" style="display:none">
@@ -221,9 +228,15 @@ textarea{resize:vertical;min-height:64px}
         <input type="text" id="f-subtema" placeholder="Ex: Atur registrat, Padró municipal…">
       </div>
 
+      <!-- Àmbit: ara és un desplegable editable, igual que Tema -->
       <div class="form-group">
         <label for="f-ambit">Àmbit territorial i desagregació màxima</label>
-        <input type="text" id="f-ambit" placeholder="Ex: Catalunya / província / comarca">
+        <select id="f-ambit">
+          <option value="">— Selecciona —</option>
+        </select>
+        <span class="form-hint">
+          <a href="#" onclick="obrirGestioAmbits();return false;">Gestionar la llista d'àmbits…</a>
+        </span>
       </div>
 
       <div class="form-group full">
@@ -337,6 +350,31 @@ textarea{resize:vertical;min-height:64px}
   </div>
 </div>
 
+<!-- ════════════════════════════════════════════
+     MODAL DE GESTIÓ D'ÀMBITS
+════════════════════════════════════════════ -->
+<div id="overlay-ambits" class="overlay" onclick="tancarModalAmbits(event)">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <h2>Gestionar àmbits geogràfics</h2>
+      <button class="modal-close" onclick="document.getElementById('overlay-ambits').classList.remove('open')">✕</button>
+    </div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:14px">
+      Afegeix o elimina opcions de la llista. El nombre entre parèntesis indica quantes fonts fan servir cada àmbit.
+      Si esborres un àmbit que ja té fonts assignades, aquelles fonts quedaran sense àmbit fins que en triïs un de nou.
+    </p>
+    <ul id="llista-ambits"></ul>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+      <input type="text" id="nou-ambit-input" placeholder="Nom del nou àmbit…"
+             onkeydown="if(event.key==='Enter'){event.preventDefault();afegirAmbit()}" style="flex:1">
+      <button class="btn btn-primary btn-sm" onclick="afegirAmbit()">+ Afegir</button>
+    </div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0">
+      <button class="btn btn-secondary" onclick="document.getElementById('overlay-ambits').classList.remove('open')">Tancar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════════════════
 // CONSTANTS
@@ -356,6 +394,17 @@ const TEMES = [
   "Eleccions i política"
 ];
 
+// Llista d'àmbits per defecte (de més ampli a més granular)
+const AMBITS_DEFAULT = [
+  "Europa / UE",
+  "Estatal (Espanya)",
+  "Catalunya",
+  "Província",
+  "Comarca",
+  "Municipi",
+  "Secció censal"
+];
+
 const CAMPS_CSV = [
   'id','nom','organisme','tema','subtema','descripcio','ambit',
   'serie','frequencia','format_acces','dades_obertes','llicencia',
@@ -364,6 +413,7 @@ const CAMPS_CSV = [
 
 // ═══════════════════════════════════════════════════════
 // DADES D'EXEMPLE
+// (ambit = valor únic del desplegable, desagregació màxima)
 // ═══════════════════════════════════════════════════════
 const EXEMPLES = [
   {
@@ -373,7 +423,7 @@ const EXEMPLES = [
     tema: "Mercat de treball i relacions laborals",
     subtema: "Expedients de regulació d'ocupació",
     descripcio: "Estadística mensual d'expedients de regulació d'ocupació per comunitat autònoma i província. Inclou tant ERO d'extinció com ERTO (suspensió i reducció de jornada).",
-    ambit: "Catalunya / província",
+    ambit: "Província",
     serie: "2000 – actualitat",
     frequencia: "Mensual",
     format_acces: "CSV-XLSX descarregable / Consulta interactiva",
@@ -393,7 +443,7 @@ const EXEMPLES = [
     tema: "Mercat de treball i relacions laborals",
     subtema: "Mercat de treball, ocupació, atur, salaris",
     descripcio: "Portal estadístic de referència per al mercat de treball a Catalunya. Inclou dades d'afiliació a la Seguretat Social, atur registrat al SOC, contractació i salaris amb desagregació comarcal.",
-    ambit: "Catalunya / província / comarca",
+    ambit: "Comarca",
     serie: "2000 – actualitat",
     frequencia: "Mensual",
     format_acces: "CSV-XLSX descarregable / Consulta interactiva / API",
@@ -413,7 +463,7 @@ const EXEMPLES = [
     tema: "Demografia i població",
     subtema: "Padró municipal, estructura de la població",
     descripcio: "Dades de població resident per municipi, comarca i província amb desagregació per sexe, grups d'edat i país de naixement. Font primària per a qualsevol anàlisi demogràfica a Catalunya.",
-    ambit: "Catalunya / província / comarca / municipi",
+    ambit: "Municipi",
     serie: "1991 – actualitat",
     frequencia: "Anual",
     format_acces: "CSV-XLSX descarregable / API / Consulta interactiva",
@@ -433,7 +483,7 @@ const EXEMPLES = [
     tema: "Mercat de treball i relacions laborals",
     subtema: "Mercat de treball europeu, comparativa internacional UE",
     descripcio: "Enquesta de forces de treball harmonitzada a nivell europeu. Ofereix dades comparables d'ocupació, atur i inactivitat per a tots els estats membres i regions NUTS-2 (incloent Catalunya).",
-    ambit: "Catalunya (NUTS-2) / Espanya / UE-27",
+    ambit: "Europa / UE",
     serie: "1983 – actualitat",
     frequencia: "Trimestral / Anual",
     format_acces: "CSV-XLSX descarregable / API / Consulta interactiva",
@@ -452,10 +502,12 @@ const EXEMPLES = [
 // ESTAT
 // ═══════════════════════════════════════════════════════
 let fonts = [];
+let ambits = [];      // llista d'àmbits editables
 let glossari = "";
 let sortColumna = "nom";
 let sortAsc = true;
 let editantId = null;
+let agrupat = false;  // agrupació per àmbit activada/desactivada
 
 // ═══════════════════════════════════════════════════════
 // EMMAGATZEMATGE (localStorage)
@@ -465,7 +517,6 @@ function carregarDades() {
   if (raw) {
     try { fonts = JSON.parse(raw); } catch(e) { fonts = []; }
   } else {
-    // Primera vegada: carrega exemples
     fonts = EXEMPLES;
     desarDades();
   }
@@ -479,6 +530,41 @@ function desarDades() {
 function desarGlossari() {
   glossari = document.getElementById("glossari-area").value;
   localStorage.setItem("cataleg_glossari", glossari);
+}
+
+// ── Àmbits: carrega des de localStorage; si no hi ha, usa els valors per defecte
+function carregarAmbits() {
+  const raw = localStorage.getItem("cataleg_ambits");
+  if (raw) {
+    try { ambits = JSON.parse(raw); } catch(e) { ambits = [...AMBITS_DEFAULT]; }
+  } else {
+    ambits = [...AMBITS_DEFAULT];
+    desarAmbits();
+  }
+}
+
+function desarAmbits() {
+  localStorage.setItem("cataleg_ambits", JSON.stringify(ambits));
+}
+
+// ── Repopula els dos selects d'àmbit (filtre i formulari) amb la llista actual
+function omplirSelectsAmbit() {
+  const filtreEl = document.getElementById('filtre-ambit');
+  const formEl   = document.getElementById('f-ambit');
+  const valFiltre = filtreEl.value;
+  const valForm   = formEl.value;
+
+  filtreEl.innerHTML = '<option value="">Tots els àmbits</option>';
+  formEl.innerHTML   = '<option value="">— Selecciona —</option>';
+
+  ambits.forEach(a => {
+    filtreEl.innerHTML += `<option value="${esc(a)}">${esc(a)}</option>`;
+    formEl.innerHTML   += `<option value="${esc(a)}">${esc(a)}</option>`;
+  });
+
+  // Restaura el valor seleccionat si encara existeix
+  if (ambits.includes(valFiltre)) filtreEl.value = valFiltre;
+  if (ambits.includes(valForm))   formEl.value   = valForm;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -507,12 +593,12 @@ function showTab(nom) {
 }
 
 // ═══════════════════════════════════════════════════════
-// RENDER TAULA
+// RENDER TAULA (amb suport d'agrupació per àmbit)
 // ═══════════════════════════════════════════════════════
 function getDadesFiltrades() {
   const cerca = document.getElementById('cerca').value.toLowerCase().trim();
   const filtreTema = document.getElementById('filtre-tema').value;
-  const filtreAmbit = document.getElementById('filtre-ambit').value.toLowerCase();
+  const filtreAmbit = document.getElementById('filtre-ambit').value;
   const filtreFormat = document.getElementById('filtre-format').value.toLowerCase();
   const filtreObertes = document.getElementById('filtre-obertes').value;
   const filtreFiabilitat = document.getElementById('filtre-fiabilitat').value;
@@ -523,7 +609,8 @@ function getDadesFiltrades() {
       if (!tot.includes(cerca)) return false;
     }
     if (filtreTema && f.tema !== filtreTema) return false;
-    if (filtreAmbit && !f.ambit.toLowerCase().includes(filtreAmbit)) return false;
+    // Filtre d'àmbit: ara compara valor exacte (igual que tema)
+    if (filtreAmbit && f.ambit !== filtreAmbit) return false;
     if (filtreFormat && !f.format_acces.toLowerCase().includes(filtreFormat)) return false;
     if (filtreObertes && f.dades_obertes !== filtreObertes) return false;
     if (filtreFiabilitat && f.fiabilitat !== filtreFiabilitat) return false;
@@ -539,8 +626,40 @@ function esAntiga(dataStr) {
   if (!dataStr) return false;
   const d = new Date(dataStr);
   const ara = new Date();
-  const unAny = 365 * 24 * 60 * 60 * 1000;
-  return (ara - d) > unAny;
+  return (ara - d) > 365 * 24 * 60 * 60 * 1000;
+}
+
+function filaDeFontHTML(f) {
+  const antiga = esAntiga(f.data_revisio);
+  const rowClass = antiga ? 'revisio-antiga' : '';
+  const badgeObertes = f.dades_obertes === 'Sí'
+    ? '<span class="badge badge-si">Sí</span>'
+    : f.dades_obertes === 'No'
+      ? '<span class="badge badge-no">No</span>'
+      : '<span style="color:#94a3b8">—</span>';
+  const badgeFiab = f.fiabilitat === 'Primària oficial'
+    ? '<span class="badge badge-primaria">Primària</span>'
+    : f.fiabilitat
+      ? '<span class="badge badge-secundaria">Secundària</span>'
+      : '';
+  const dataRevisio = f.data_revisio
+    ? f.data_revisio + (antiga ? ' <span class="badge badge-antiga">Revisar!</span>' : '')
+    : '<span style="color:#94a3b8">—</span>';
+
+  return `<tr class="${rowClass}">
+    <td><div class="nom-font">${esc(f.nom)}</div>${badgeFiab}</td>
+    <td>${esc(f.organisme)}</td>
+    <td>${esc(f.tema)}</td>
+    <td>${esc(f.ambit)}</td>
+    <td>${esc(f.format_acces)}</td>
+    <td>${badgeObertes}</td>
+    <td>${dataRevisio}</td>
+    <td class="accions">
+      <button class="btn btn-primary btn-sm" onclick="obrirDetalls('${f.id}')">Detalls</button>
+      <button class="btn btn-secondary btn-sm" onclick="editarFont('${f.id}')">Editar</button>
+      <button class="btn btn-danger btn-sm" onclick="esborrarFont('${f.id}')">Esborrar</button>
+    </td>
+  </tr>`;
 }
 
 function renderTaula() {
@@ -549,11 +668,9 @@ function renderTaula() {
   const empty = document.getElementById('empty-state');
   const alerta = document.getElementById('alerta-revisio-antiga');
 
-  // Alerta global de revisions antigues
   const hiHaAntiques = fonts.some(f => esAntiga(f.data_revisio));
   alerta.style.display = hiHaAntiques ? 'block' : 'none';
 
-  // Comptador
   document.getElementById('comptador-fonts').textContent =
     fonts.length === 1 ? '1 font' : fonts.length + ' fonts';
 
@@ -564,39 +681,47 @@ function renderTaula() {
   }
   empty.style.display = 'none';
 
-  cos.innerHTML = dades.map(f => {
-    const antiga = esAntiga(f.data_revisio);
-    const rowClass = antiga ? 'revisio-antiga' : '';
-    const badgeObertes = f.dades_obertes === 'Sí'
-      ? '<span class="badge badge-si">Sí</span>'
-      : f.dades_obertes === 'No'
-        ? '<span class="badge badge-no">No</span>'
-        : '<span style="color:#94a3b8">—</span>';
-    const badgeFiab = f.fiabilitat === 'Primària oficial'
-      ? '<span class="badge badge-primaria">Primària</span>'
-      : f.fiabilitat
-        ? '<span class="badge badge-secundaria">Secundària</span>'
-        : '';
-    const dataRevisio = f.data_revisio
-      ? f.data_revisio + (antiga ? ' <span class="badge badge-antiga">Revisar!</span>' : '')
-      : '<span style="color:#94a3b8">—</span>';
+  if (agrupat) {
+    // ── Mode agrupat: seccions per àmbit ──
+    // Ordre dels grups: segueix la llista d'àmbits editables; els sense àmbit van al final
+    const grups = {};
+    dades.forEach(f => {
+      const clau = f.ambit || '(sense àmbit)';
+      if (!grups[clau]) grups[clau] = [];
+      grups[clau].push(f);
+    });
 
-    return `<tr class="${rowClass}">
-      <td><div class="nom-font">${esc(f.nom)}</div>
-          ${badgeFiab}</td>
-      <td>${esc(f.organisme)}</td>
-      <td>${esc(f.tema)}</td>
-      <td>${esc(f.ambit)}</td>
-      <td>${esc(f.format_acces)}</td>
-      <td>${badgeObertes}</td>
-      <td>${dataRevisio}</td>
-      <td class="accions">
-        <button class="btn btn-primary btn-sm" onclick="obrirDetalls('${f.id}')">Detalls</button>
-        <button class="btn btn-secondary btn-sm" onclick="editarFont('${f.id}')">Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="esborrarFont('${f.id}')">Esborrar</button>
-      </td>
-    </tr>`;
-  }).join('');
+    // Ordena els grups seguint l'ordre de la llista d'àmbits
+    const ordreAmbits = [...ambits, '(sense àmbit)'];
+    const clausOrdenades = Object.keys(grups).sort((a, b) => {
+      const ia = ordreAmbits.indexOf(a);
+      const ib = ordreAmbits.indexOf(b);
+      const ra = ia === -1 ? 9999 : ia;
+      const rb = ib === -1 ? 9999 : ib;
+      return ra - rb;
+    });
+
+    const ncols = 8; // nombre de columnes de la taula
+    cos.innerHTML = clausOrdenades.map(clau => {
+      const fonts_grup = grups[clau];
+      const cap = `<tr class="grup-cap">
+        <td colspan="${ncols}">${esc(clau)} &nbsp;<span style="font-weight:400;font-size:12px;opacity:.7">(${fonts_grup.length} font${fonts_grup.length !== 1 ? 's' : ''})</span></td>
+      </tr>`;
+      return cap + fonts_grup.map(filaDeFontHTML).join('');
+    }).join('');
+  } else {
+    // ── Mode pla (per defecte) ──
+    cos.innerHTML = dades.map(filaDeFontHTML).join('');
+  }
+}
+
+// ── Activa/desactiva l'agrupació per àmbit ──
+function toggleAgrupar() {
+  agrupat = !agrupat;
+  const btn = document.getElementById('btn-agrupar');
+  btn.classList.toggle('actiu', agrupat);
+  btn.textContent = agrupat ? 'Vista plana' : 'Agrupar per àmbit';
+  renderTaula();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -632,7 +757,6 @@ function obrirDetalls(id) {
   ];
 
   const html = '<div class="detail-grid">' + camps.map(c => {
-    const val = f[c.k] || '<em style="color:#94a3b8">No especificat</em>';
     const displayVal = c.isUrl && f[c.k]
       ? `<a href="${esc(f[c.k])}" target="_blank">${esc(f[c.k])}</a>`
       : esc(f[c.k]) || '<em style="color:#94a3b8">No especificat</em>';
@@ -654,6 +778,69 @@ function tancarModal(e) {
 }
 
 // ═══════════════════════════════════════════════════════
+// MODAL DE GESTIÓ D'ÀMBITS
+// ═══════════════════════════════════════════════════════
+function obrirGestioAmbits() {
+  renderLlistaAmbits();
+  document.getElementById('overlay-ambits').classList.add('open');
+}
+
+function tancarModalAmbits(e) {
+  if (e.target === document.getElementById('overlay-ambits')) {
+    document.getElementById('overlay-ambits').classList.remove('open');
+  }
+}
+
+function renderLlistaAmbits() {
+  const ul = document.getElementById('llista-ambits');
+  if (ambits.length === 0) {
+    ul.innerHTML = '<li style="color:#94a3b8;font-size:13px;padding:6px 0">Cap àmbit definit encara.</li>';
+    return;
+  }
+  ul.innerHTML = ambits.map((a, idx) => {
+    const nUsos = fonts.filter(f => f.ambit === a).length;
+    const pucEsborrar = nUsos === 0;
+    return `<li>
+      <span>${esc(a)} <span class="n-usos">(${nUsos} font${nUsos !== 1 ? 's' : ''})</span></span>
+      <button class="btn btn-danger btn-sm"
+              onclick="esborrarAmbit(${idx})"
+              ${pucEsborrar ? '' : 'title="Té fonts assignades — pots esborrar igualment"'}>
+        Esborrar
+      </button>
+    </li>`;
+  }).join('');
+}
+
+function afegirAmbit() {
+  const input = document.getElementById('nou-ambit-input');
+  const nom = input.value.trim();
+  if (!nom) return;
+  if (ambits.some(a => a.toLowerCase() === nom.toLowerCase())) {
+    alert('Aquest àmbit ja existeix a la llista.');
+    return;
+  }
+  ambits.push(nom);
+  desarAmbits();
+  omplirSelectsAmbit();
+  renderLlistaAmbits();
+  input.value = '';
+  input.focus();
+}
+
+function esborrarAmbit(idx) {
+  const nom = ambits[idx];
+  const nUsos = fonts.filter(f => f.ambit === nom).length;
+  const msg = nUsos > 0
+    ? `Segur que vols esborrar "${nom}"?\n\nAtenció: ${nUsos} font${nUsos!==1?'s':''} fan servir aquest àmbit. Quedaran sense àmbit assignat.`
+    : `Segur que vols esborrar "${nom}"?`;
+  if (!confirm(msg)) return;
+  ambits.splice(idx, 1);
+  desarAmbits();
+  omplirSelectsAmbit();
+  renderLlistaAmbits();
+}
+
+// ═══════════════════════════════════════════════════════
 // FORMULARI — CRUD
 // ═══════════════════════════════════════════════════════
 function novaFont() {
@@ -662,7 +849,6 @@ function novaFont() {
   document.getElementById('form-font').reset();
   document.getElementById('f-id').value = '';
   document.getElementById('btn-esborrar-form').style.display = 'none';
-  // Data d'avui per defecte
   document.getElementById('f-data-revisio').value = avui();
   showTab('formulari');
 }
@@ -704,7 +890,7 @@ function desarFont(e) {
     tema: document.getElementById('f-tema').value,
     subtema: document.getElementById('f-subtema').value.trim(),
     descripcio: document.getElementById('f-descripcio').value.trim(),
-    ambit: document.getElementById('f-ambit').value.trim(),
+    ambit: document.getElementById('f-ambit').value,
     serie: document.getElementById('f-serie').value.trim(),
     frequencia: document.getElementById('f-frequencia').value,
     format_acces: document.getElementById('f-format').value.trim(),
@@ -787,7 +973,6 @@ function exportarCSV() {
 // CSV IMPORT
 // ═══════════════════════════════════════════════════════
 function parseCSV(text) {
-  // Elimina BOM si n'hi ha
   if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
   const files = [];
   let fila = [], camp = '', dins_cometes = false;
@@ -821,7 +1006,7 @@ function importarCSV(event) {
     const noves = [];
     for (let i = 1; i < files.length; i++) {
       const fila = files[i];
-      if (fila.every(c => !c.trim())) continue; // salta files buides
+      if (fila.every(c => !c.trim())) continue;
       const obj = {};
       caps.forEach((cap, idx) => { obj[cap] = fila[idx] || ''; });
       if (!obj.id) obj.id = nouId();
@@ -835,7 +1020,6 @@ function importarCSV(event) {
     );
     if (accio) { fonts = noves; }
     else {
-      // Afegir sense duplicar per ID
       noves.forEach(n => {
         const idx = fonts.findIndex(f => f.id === n.id);
         if (idx >= 0) { fonts[idx] = n; } else { fonts.push(n); }
@@ -916,14 +1100,19 @@ ADVERTIMENTS RECURRENTS
 // INICIALITZACIÓ
 // ═══════════════════════════════════════════════════════
 function inicialitzar() {
-  // Omplir dropdown de temes
+  // Omplir dropdown de temes (fix)
   const selectTema = document.getElementById('filtre-tema');
   const selectFormTema = document.getElementById('f-tema');
   TEMES.forEach(t => {
-    selectTema.innerHTML += `<option value="${esc(t)}">${esc(t)}</option>`;
+    selectTema.innerHTML   += `<option value="${esc(t)}">${esc(t)}</option>`;
     selectFormTema.innerHTML += `<option value="${esc(t)}">${esc(t)}</option>`;
   });
 
+  // Carregar àmbits editables i omplir selects
+  carregarAmbits();
+  omplirSelectsAmbit();
+
+  // Carregar fonts i glossari
   carregarDades();
   renderTaula();
 }
